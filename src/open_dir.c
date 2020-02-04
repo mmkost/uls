@@ -1,52 +1,41 @@
 #include "uls.h"
 
-static _Bool mx_cmp(void * str1, void * str2) {
-    char * s1 = (char *) str1;
-    char * s2 = (char *) str2;
-
-    for (int i = 0; s1[i] != '\0'; i++) {
-        if (s1[i] > s2[i])
-           return true;
-    }
-    return false;
-}
-
 int main(int argc, char **argv) {
     struct dirent *de;
+    struct winsize ws;
+
+    ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
+
+    printf("%d\n", ws.ws_col);
     DIR *dr = opendir(argv[argc - 1]);
     if (dr == NULL) {
         write(1, "error\n", 6);
         return 0;
     }
-
     t_list *p;
-    
-    if ((de = readdir(dr)) != NULL)
-        p = mx_create_node(de -> d_name);
     while ((de = readdir(dr)) != NULL)
-        mx_push_back(&p, de -> d_name);
+        if (p == NULL) {
+            p = mx_create_node(de->d_name);
+        }
+        else {
+            mx_push_back(&p, de->d_name);
 
-    for (t_list *k = p; k -> next; k = k -> next) {
-        mx_printstr(k -> data);
-        mx_printstr("\t");
-    }
-
-    mx_printstr("\n");
-
-    mx_sort_list(p, &mx_cmp);
-
-    for (t_list *k = p; k -> next; k = k -> next) {
-        mx_printstr(k -> data);
-        mx_printstr("\t");
-    }
-    
-        //if (mx_strcmp(de -> d_name,argv[1]) == 0){
-    
-        //}
-            //printf("%s\t", de-> d_name);
-    
+        }
+        
+    p = mx_sort(p);
+    //system("leaks -q uls");
+    for (;p != NULL; p = p->next) {
+        char *str = p->data;
+        //system("leaks -q uls");
+        if(str[0] != '.') {
+            mx_printstr(p->data);
+            mx_printchar('\t');
+        }
+        //mx_strdel(&str);
+    } 
     closedir(dr);
     //system("leaks -q uls");
     return 0;
+    system("leaks -q uls");
 }
 
