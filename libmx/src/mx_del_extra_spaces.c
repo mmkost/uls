@@ -1,19 +1,17 @@
-#include "libmx.h"
+#include "../inc/libmx.h"
 
 char *mx_del_extra_spaces(const char *str) {
-    char *res = NULL;
-    char *s = NULL;
-    int k = 0;
+    if (str) {
+        char *temp = mx_strnew(mx_strlen(str));
+        char *s;
+        int j = 0;
 
-    if (str == NULL) 
-        return NULL;
-    s = mx_strnew(mx_strlen(str));
-    for (int i = 0; str[i]; s[k++] = str[i++])
-        if (mx_isspace(str[i])) {
-            while (mx_isspace(str[++i]));
-            s[k++] = ' ';
-        }
-    res = mx_strtrim(s);
-    free(s);
-    return res;
+        for (int i = 0; str[i]; temp[j++] = str[i++])
+            if (mx_isspace(str[i]))
+                for (temp[j++] = ' '; mx_isspace(str[i]); i++);
+        s = mx_strtrim(temp);
+        free(temp);
+        return s;
+    }
+    return NULL;
 }

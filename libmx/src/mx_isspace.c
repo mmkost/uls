@@ -1,13 +1,6 @@
-#include "libmx.h"
+#include "../inc/libmx.h"
 
-bool mx_isspace(char c) {
-    if (c == ' ' || c =='\f' || c == '\n' || 
-        c == '\r' || c == '\t' || c == '\v') 
-    {
-        return true;
-    }
-    else 
-    {
-        return false;
-    }
+_Bool mx_isspace(char c) {
+    return (c == '\t' || c == '\n' || c == '\v'
+            || c == '\f' || c == '\r' || c == ' ');
 }

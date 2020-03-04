@@ -1,11 +1,11 @@
-#include "libmx.h"
+#include "../inc/libmx.h"
 
-void mx_pop_front(t_list **head) {
-    t_list *next_list = NULL;
+void mx_pop_front(t_list **list) {
+    if (list && *list) {
+        t_list *p = (*list)->next;
 
-    if (head == NULL || *head == NULL)
-        return;
-    next_list = (*head)->next;
-    free(*head);
-    *head = next_list;
+        free(*list);
+        *list = p;
+    }
+    return;
 }

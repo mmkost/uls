@@ -1,17 +1,14 @@
-#include "libmx.h"
+#include "../inc/libmx.h"
 
 void mx_printint(int n) {
-    long int m = n;
-    
-    if (m < 0) {
-        m = m * -1;
+    unsigned int m = n;
+    int v;
+
+    if (n < 0) {
         mx_printchar('-');
+        m = -n;
     }
-    if (m >= 0 && m <= 9) {
-        mx_printchar(m + 48);
-    }
-    else {
-        mx_printint(m / 10);
-        mx_printchar((m % 10) + 48);
-    } 
+    for (v = 1; m / v >= 10; v *= 10);
+    for (; v > 0; v /= 10)
+        mx_printchar((m / v) % 10 + '0');
 }
