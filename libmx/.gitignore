@@ -1,0 +1,7 @@
+*.txt
+.DS_Store
+._*
+main.c
+aaa
+*.swp
+obj

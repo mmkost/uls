@@ -1,11 +1,15 @@
-#include "libmx.h"
-
 int mx_sqrt(int x) {
-    if (x < 0)
-        return 0;
-    for (int i = 1; i * i <= x && i <= 46340; i++) {
-        if (i * i == x)
-            return i;
+    int i = 0;
+    int j = x / 2 + 1;
+    int temp;
+
+    if (j > 46340) 
+        j = 46340;
+    while (i <= j) {
+        temp = i + (j - i) / 2;
+        ((temp * temp) > x) ? (j = temp - 1) : (i = temp + 1);
+        if (temp * temp == x) 
+            return temp;
     }
     return 0;
 }

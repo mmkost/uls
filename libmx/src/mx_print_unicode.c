@@ -1,24 +1,19 @@
-#include "libmx.h"
+#include "../inc/libmx.h"
+
+static void prtu(int c, int a, int b, int i) {
+    char s;
+    
+    for (int j = i; j >= 0; j--) {
+        s = 0;
+        s = j == i ? (char)((c >> (6 * j)) & a) | b :
+            (char)((c >> (6 * j)) & 63) | 128;
+        write(1, &s, 1);
+    }
+}
 
 void mx_print_unicode(wchar_t c) {
-    char str[5] = {0};
-    if (c <= 0x7F) { 
-        str[0] = (char) c;
-    }
-    else if (c <= 0x07FF) { 
-        str[0] = (char) (((c >> 6)  & 0x1F) | 0xC0);
-        str[1] = (char) (((c >> 0)  & 0x3F) | 0x80);
-    }
-    else if (c <= 0xFFFF) { 
-        str[0] = (char) (((c >> 12) & 0x0F) | 0xE0);
-        str[1] = (char) (((c >> 6)  & 0x3F) | 0x80);
-        str[2] = (char) (((c >> 0)  & 0x3F) | 0x80);
-    }
-    else if (c < 0x10FFFF) {
-        str[0] = (char) (((c >> 18) & 0x07) | 0xF0);
-        str[1] = (char) (((c >> 12) & 0x3F) | 0x80);
-        str[2] = (char) (((c >> 6)  & 0x3F) | 0x80);
-        str[3] = (char) (((c >> 0)  & 0x3F) | 0x80);
-    }
-    write(1, str, mx_strlen(str));
+    if (c < 128) write(1, &c, 1);
+    else if (c < 2048) prtu((int)c, 31, 192, 1);
+    else if (c < 65536) prtu((int)c, 15, 224, 2);
+    else prtu((int)c, 7, 240, 3);
 }

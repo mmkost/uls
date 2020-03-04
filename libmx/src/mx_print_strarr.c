@@ -1,12 +1,14 @@
-#include "libmx.h"
+#include "../inc/libmx.h"
 
 void mx_print_strarr(char **arr, const char *delim) {
-    if (arr != NULL && delim != NULL && *arr != NULL) {
-        for (int i = 0; arr[i] != NULL; i++) {
-            mx_printstr(arr[i]);
-            if(arr[i + 1] != NULL)
-                mx_printstr(delim);
-        }
-        mx_printchar('\n');
+    int i;
+
+    if (arr == NULL || *arr == NULL|| delim == NULL) 
+        return;
+    for (i = 0; arr[i + 1]; i++) {
+        mx_printstr(arr[i]);
+        mx_printstr(delim);
     }
+    mx_printstr(arr[i]);
+    mx_printchar('\n');
 }
