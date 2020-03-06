@@ -11,6 +11,7 @@ int main(int argc, char **argv) {
         write(1, "error\n", 6);
         return 0;
     }
+    mx_parse(argc, argv);
     t_list *p; 
     while ((de = readdir(dr)) != NULL)
         if(de->d_name[0] != '.') {
