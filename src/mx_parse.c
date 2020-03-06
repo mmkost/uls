@@ -35,16 +35,21 @@ void mx_parse(int argc, char **argv) {
     //char str[11];
     str = "1lmCSturafA";
     char *true_str = NULL;
+    int h = 0;
 
     for (int i = 1; i < argc && argv[i][0] == '-'; i++) {
         if (argv[i][0] == '-' && argv[i][1] != '\0') {
             for (int j = 1; argv[i][j] != '\0'; j++) {
                 if (mx_get_char_index(str, argv[i][j]) == -1) {
+                	if (mx_strcmp(argv[i], "--") == 0) 
+                		h = i;
+                	else {
                         write(2, "uls: illegal option -- ", 23);
                         write(2, &argv[i][j], 1);
                         write(2, "\nusage: uls [-ACSaflmrtu1] [file ...]\n", 38);
                         exit(1);
                     }
+                }
                 else
                     true_str = record(argc, argv);    
             }
