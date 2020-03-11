@@ -2,6 +2,7 @@
 
 static void swap(char **arr1, char **arr2) {
     char *temp = *arr1;
+
     *arr1 = *arr2;
     *arr2 = temp;
 }

@@ -28,12 +28,10 @@ static char *record(int argc, char **argv) {
                         str[k++] = argv[i][j];
                 }
     return str;
-} 
+}
 
 void mx_parse(int argc, char **argv) {
-    char *str = mx_strnew(11);
-    //char str[11];
-    str = "1lmCSturafA";
+    char *str = "1lmCSturafA";
     char *true_str = NULL;
     int h = 0;
 

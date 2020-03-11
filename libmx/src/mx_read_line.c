@@ -26,7 +26,6 @@ static int check_static(char **lineptr, char **str, char delim) {
     *lineptr = (char *) mx_memmove(mx_strnew(count), *str, count);
     free(*str);
     *str = NULL;
-
     return count;
 }
 
@@ -64,8 +63,8 @@ int mx_read_line(char **lineptr, size_t buf_size, char delim, const int fd) {
         count = check_static(lineptr, &str, delim);
     if (str)
         return count;
-    count = read_main_loop(lineptr, &str, count, 
-                              (t_read){buf_size, delim, fd});
+    count = read_main_loop(lineptr, &str, count,
+                           (t_read){buf_size, delim, fd});
     if (count == 0)
         return -1;
     return count;
