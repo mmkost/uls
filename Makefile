@@ -3,10 +3,14 @@ CFLAGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 INC = uls.h
 SRC = open_dir.c\
 	mx_sort.c\
-	mx_biggest.c
+	mx_biggest.c\
+	mx_multicol.c\
+	mx_parse.c
 OBJ = open_dir.o\
 	mx_sort.o\
-	mx_biggest.o
+	mx_biggest.o\
+	mx_multicol.o\
+	mx_parse.o
 all: install clean
 install:
 	@make install -sC libmx
